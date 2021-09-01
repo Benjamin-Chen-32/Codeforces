@@ -6,7 +6,6 @@ import java.util.StringTokenizer;
 public class AlmostPrime {
 	
 	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer tk = new StringTokenizer(in.readLine());
 		int N = Integer.parseInt(tk.nextToken());

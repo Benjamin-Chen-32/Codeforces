@@ -14,6 +14,7 @@ public class NextRound {
 			if (i == K - 1) {
 				score = s;
 			} else if (s < score || s == 0) {
+				in.close();
 				break;
 			}
 			if (s == 0) {

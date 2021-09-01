@@ -18,7 +18,6 @@ public class Dijkstra {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer tk = new StringTokenizer(in.readLine());
 		int N = Integer.parseInt(tk.nextToken());
@@ -106,7 +105,6 @@ class DijNode implements Comparable<DijNode> {
 	
 	@Override
 	public int compareTo(DijNode other) {
-		// TODO Auto-generated method stub
 		if (this.dist == other.dist) {
 			return Integer.compare(this.num, other.num);
 		}
