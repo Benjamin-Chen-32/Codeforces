@@ -1,9 +1,10 @@
+package training;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class CaesarLegion {
+public class CaesarsLegion {
 	
 	static final long MOD = 100000000;
 	
@@ -13,7 +14,7 @@ public class CaesarLegion {
 	int K2;
 	long[][][][] dp;
 	
-	public CaesarLegion(int N1, int N2, int K1, int K2) {
+	public CaesarsLegion(int N1, int N2, int K1, int K2) {
 		this.N1 = N1;
 		this.N2 = N2;
 		this.K1 = K1;
@@ -36,7 +37,7 @@ public class CaesarLegion {
 		int N2 = Integer.parseInt(tk.nextToken());
 		int K1 = Math.min(Integer.parseInt(tk.nextToken()), N1);
 		int K2 = Math.min(Integer.parseInt(tk.nextToken()), N2);
-		CaesarLegion solve = new CaesarLegion(N1, N2, K1, K2);
+		CaesarsLegion solve = new CaesarsLegion(N1, N2, K1, K2);
 		long ans = 0;
 		for (int i = 1; i <= K1; i++) {
 			ans += solve.recurse(N1 - 1, N2, i, true) % MOD;
