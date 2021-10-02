@@ -2,16 +2,20 @@ package utpc1;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 public class WalkInThePark {
-	
+
+	static int N;
+	static int M;
+
 	public static void main(String[] args) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer tk = new StringTokenizer(in.readLine());
-		int N = Integer.parseInt(tk.nextToken());
-		int M = Integer.parseInt(tk.nextToken());
+		N = Integer.parseInt(tk.nextToken());
+		M = Integer.parseInt(tk.nextToken());
 		boolean[][] obstacles = new boolean[N][M];
 		for (int i = 0; i < N; i++) {
 			String line = in.readLine();
@@ -37,33 +41,58 @@ public class WalkInThePark {
 			bPoints[i][0] = row;
 			bPoints[i][1] = col;
 		}
-		int[] offsetR = { 0, 0, 1, -1 };
-		int[] offsetC = { 1, -1, 0, 0 };
+		int[][] a1Dists = bfs(new Point(aPoints[0][0], aPoints[0][1], 0), obstacles);
+		int[][] a2Dists = bfs(new Point(aPoints[1][0], aPoints[1][1], 0), obstacles);
+		int[][] b1Dists = bfs(new Point(bPoints[0][0], bPoints[0][1], 0), obstacles);
+		int[][] b2Dists = bfs(new Point(bPoints[1][0], bPoints[1][1], 0), obstacles);
+		int minSum = Integer.MAX_VALUE;
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < M; j++) {
 				if (obstacles[i][j]) {
 					 continue;
 				}
-				
+				if (a1Dists[i][j] != -1 && a2Dists[i][j] != -1 && b1Dists[i][j] != -1 && b2Dists[i][j] != -1) {
+					minSum = Math.min(minSum, a1Dists[i][j] + a2Dists[i][j] + b1Dists[i][j] + b2Dists[i][j]);
+				}
 			}
+		}
+		if (minSum == Integer.MAX_VALUE) {
+			System.out.println("IMPOSSIBLE");
+		} else {
+			System.out.println(minSum);
 		}
 		in.close();
 	}
 
-	static void bfs(int startR, int startC, int endR, int endC) {
+	static int[][] bfs(Point start, boolean[][] obstacles) {
+		int[] offsetR = { 0, 0, 1, -1 };
+		int[] offsetC = { 1, -1, 0, 0 };
+		int[][] dists = new int[N][M];
+		for (int i = 0; i < N; i++) {
+			Arrays.fill(dists[i], -1);
+		}
 		LinkedList<Point> q = new LinkedList<Point>();
-				q.add(new Point(startR, startC));
-				while (!q.isEmpty()) {
-					q.pop();
-					for (int k = 0; k < 4; k++) {
-
+		q.add(start);
+		dists[start.r][start.c] = 0;
+		while (!q.isEmpty()) {
+			Point curr = q.pop();
+			for (int k = 0; k < 4; k++) {
+				int newR = curr.r + offsetR[k];
+				int newC = curr.c + offsetC[k];
+				if (inBounds(newR, newC)) {
+					if (!obstacles[newR][newC] && dists[newR][newC] == -1) {
+						q.add(new Point(newR, newC, curr.dist + 1));
+						dists[newR][newC] = curr.dist + 1;
 					}
 				}
+			}
+		}
+		return dists;
 	}
 
 
-	static boolean inBounds(int r, int c, int R, int C) {
-		if (r < R && r >= 0 && c < C && c >= 0) {
+	static boolean inBounds(int r, int c) {
+		if (r < N && r >= 0 && c < M && c >= 0) {
 			return true;
 		}
 		return false;
@@ -72,11 +101,12 @@ public class WalkInThePark {
 	static class Point {
 		int r;
 		int c;
-		int dist = 0;
+		int dist;
 
-		public Point(int r, int c) {
+		public Point(int r, int c, int dist) {
 			this.r = r;
 			this.c = c;
+			this.dist = dist;
 		}
 	}
 }
