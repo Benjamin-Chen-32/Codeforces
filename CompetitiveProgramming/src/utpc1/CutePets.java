@@ -1,4 +1,5 @@
 package utpc1;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -6,7 +7,7 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class CutePets {
-	
+
 	public static void main(String[] args) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer tk = new StringTokenizer(in.readLine());
@@ -19,7 +20,8 @@ public class CutePets {
 			int numCutes = Integer.parseInt(tk.nextToken());
 			PetOwner owner = new PetOwner(i, numOwners, numCutes);
 			PetCute cute = new PetCute(i, numOwners, numCutes);
-			owners[i] = owner;;
+			owners[i] = owner;
+			;
 			cutes[i] = cute;
 		}
 		in.close();
@@ -34,7 +36,7 @@ public class CutePets {
 		System.out.println("no");
 	}
 
-	static class PetOwner implements Comparable<PetOwner>{
+	static class PetOwner implements Comparable<PetOwner> {
 		int type = 0;
 		int owners = 0;
 		int cutes = 0;

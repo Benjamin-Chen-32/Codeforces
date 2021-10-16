@@ -1,3 +1,5 @@
+package templates.helpers;
+
 import java.util.Arrays;
 
 public class DataStructures {

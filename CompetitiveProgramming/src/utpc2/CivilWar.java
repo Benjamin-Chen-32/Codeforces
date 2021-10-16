@@ -1,11 +1,12 @@
 package utpc2;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class CivilWar {
-	
+
 	public static void main(String[] args) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer tk = new StringTokenizer(in.readLine());
@@ -33,7 +34,7 @@ public class CivilWar {
 	}
 
 	static boolean isPower(int x, int y) {
-		int roundedLog = (int) (Math.log(y) / Math.log(x));       
+		int roundedLog = (int) (Math.log(y) / Math.log(x));
 		double nonRoundedLog = Math.log(y) / Math.log(x);
 		return roundedLog == nonRoundedLog;
 	}

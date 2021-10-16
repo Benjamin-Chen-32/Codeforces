@@ -1,3 +1,5 @@
+package templates.helpers;
+
 public class Combinatorics {
 
 	static void combWithRep(int[] chosen, int[] arr, int currLength, int length, int start, int end) {

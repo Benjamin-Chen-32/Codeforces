@@ -1,19 +1,20 @@
 package training;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class CaesarsLegion {
-	
+
 	static final long MOD = 100000000;
-	
+
 	int N1;
 	int N2;
 	int K1;
 	int K2;
 	long[][][][] dp;
-	
+
 	public CaesarsLegion(int N1, int N2, int K1, int K2) {
 		this.N1 = N1;
 		this.N2 = N2;
@@ -29,7 +30,7 @@ public class CaesarsLegion {
 			}
 		}
 	}
-	
+
 	public static void main(String[] args) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer tk = new StringTokenizer(in.readLine());
@@ -48,7 +49,7 @@ public class CaesarsLegion {
 		System.out.println(ans % MOD);
 		in.close();
 	}
-	
+
 	public long recurse(int numFoot, int numHorse, int numConsecutive, boolean lastFoot) {
 		if (numFoot == 0) {
 			if (numHorse > K2) {

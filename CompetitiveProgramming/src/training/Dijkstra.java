@@ -1,4 +1,5 @@
 package training;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,13 +12,13 @@ public class Dijkstra {
 	int N;
 	int M;
 	LinkedList<DijEdge>[] adjList;
-	
+
 	public Dijkstra(int N, int M, LinkedList<DijEdge>[] adjList) {
 		this.N = N;
 		this.M = M;
 		this.adjList = adjList;
 	}
-	
+
 	public static void main(String[] args) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer tk = new StringTokenizer(in.readLine());
@@ -55,7 +56,7 @@ public class Dijkstra {
 		}
 		in.close();
 	}
-	
+
 	public int[] dijkstra(int root) {
 		PriorityQueue<DijNode> q = new PriorityQueue<DijNode>();
 		int[] prevs = new int[N];
@@ -88,7 +89,7 @@ public class Dijkstra {
 class DijEdge {
 	int other;
 	int weight;
-	
+
 	public DijEdge(int other, int weight) {
 		this.other = other;
 		this.weight = weight;
@@ -98,12 +99,12 @@ class DijEdge {
 class DijNode implements Comparable<DijNode> {
 	int num;
 	int dist;
-	
+
 	public DijNode(int num, int dist) {
 		this.num = num;
 		this.dist = dist;
 	}
-	
+
 	@Override
 	public int compareTo(DijNode other) {
 		if (this.dist == other.dist) {

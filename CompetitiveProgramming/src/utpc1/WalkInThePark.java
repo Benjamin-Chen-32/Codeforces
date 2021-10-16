@@ -1,4 +1,5 @@
 package utpc1;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -49,7 +50,7 @@ public class WalkInThePark {
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < M; j++) {
 				if (obstacles[i][j]) {
-					 continue;
+					continue;
 				}
 				if (a1Dists[i][j] != -1 && a2Dists[i][j] != -1 && b1Dists[i][j] != -1 && b2Dists[i][j] != -1) {
 					minSum = Math.min(minSum, a1Dists[i][j] + a2Dists[i][j] + b1Dists[i][j] + b2Dists[i][j]);
@@ -89,7 +90,6 @@ public class WalkInThePark {
 		}
 		return dists;
 	}
-
 
 	static boolean inBounds(int r, int c) {
 		if (r < N && r >= 0 && c < M && c >= 0) {
