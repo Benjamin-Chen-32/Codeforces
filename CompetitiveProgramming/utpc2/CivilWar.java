@@ -32,9 +32,14 @@ public class CivilWar {
 	}
 
 	static boolean isPower(int x, int y) {
-		int roundedLog = (int) (Math.log(y) / Math.log(x));
-		double nonRoundedLog = Math.log(y) / Math.log(x);
-		return roundedLog == nonRoundedLog;
+		int curr = x;
+		while (curr <= y) {
+			if (curr == y) {
+				return true;
+			}
+			curr *= x;
+		}
+		return false;
 	}
 
 	static int gcd(int a, int b) {
