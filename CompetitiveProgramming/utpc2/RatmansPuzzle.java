@@ -10,15 +10,11 @@ public class RatmansPuzzle {
 		StringTokenizer tk = new StringTokenizer(in.readLine());
 		long N = Long.parseLong(tk.nextToken());
 		int K = Integer.parseInt(tk.nextToken());
-		long max = 1L << K;
-		long pairs = 0;
-		for (long i = 0; i < max - 1; i++) {
-			long xor = i ^ N;
-			if (xor < max && xor > i) {
-				pairs++;
-			}
+		if (N >= ((long) 1 << K)) {
+			System.out.println(0);
+		} else {
+			System.out.println(((long) 1 << (K - 1)));
 		}
-		System.out.println(pairs);
 		in.close();
 	}
 }
