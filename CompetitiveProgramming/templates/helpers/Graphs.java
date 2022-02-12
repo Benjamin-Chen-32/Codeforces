@@ -142,6 +142,39 @@ public class Graphs {
 		return dists;
 	}
 
+	static int[][] dijkstraGrid(int[][] grid, int N) {
+		PriorityQueue<Node> heap = new PriorityQueue<Node>();
+		int[][] dists = new int[N][N];
+		for (int i = 0; i < N; i++) {
+			Arrays.fill(dists[i], Integer.MAX_VALUE);
+		}
+		boolean[][] inSet = new boolean[N][N];
+		heap.add(new Node(0, 0, 0));
+		dists[0][0] = 0;
+
+		while (!heap.isEmpty()) {
+			Node u = heap.poll();
+			int r = u.r;
+			int c = u.c;
+			inSet[r][c] = true;
+			for (int i = 0; i < 4; i++) {
+				int newR = r + dirR[i];
+				int newC = c + dirC[i];
+				if (!inBounds(newR, newC, N, N)) {
+					continue;
+				}
+				int distsThroughU = dists[r][c] + weight;
+				if (!inSet[newR][newC]) {
+					if (distsThroughU < dists[newR][newC]) {
+						dists[newR][newC] = distsThroughU;
+						heap.add(new Node(newR, newC, distsThroughU));
+					}
+				}
+			}
+		}
+		return dists;
+	}
+
 	static class Node implements Comparable<Node> {
 		int num;
 		long dist;
