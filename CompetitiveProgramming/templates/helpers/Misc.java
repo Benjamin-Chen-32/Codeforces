@@ -109,10 +109,10 @@ public class Misc {
 		return (int) (Math.ceil((Math.log(x) / Math.log(2)))) == (int) (Math.floor(((Math.log(x) / Math.log(2)))));
 	}
 
-	// binary search variants
+	// Binary search variants
 
 	static int lowerBound(int[] arr, int value) {
-		// first element which is >= value
+		// First element which is >= value
 		int low = 0;
 		int high = arr.length - 1;
 		while (low < high) {
@@ -127,7 +127,7 @@ public class Misc {
 	}
 
 	static int upperBound(int[] arr, int value) {
-		// first element which is > val
+		// First element which is > val
 		int low = 0;
 		int high = arr.length - 1;
 		while (low < high) {
