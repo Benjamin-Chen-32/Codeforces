@@ -257,18 +257,25 @@ public class Graphs {
 			level = (int) (Math.ceil(Math.log(N) / Math.log(2)));
 			depth = new int[N];
 			parent = new int[N][level];
-			dfsLCA(0, -1);
+			bfsLCA(0);
 			precomputeSparseMatrix();
 		}
 
-		public void dfsLCA(int curr, int prev) {
-			if (curr != 0) {
-				depth[curr] = depth[prev] + 1;
-				parent[curr][0] = prev;
-			}
-			for (int adj : adjList[curr]) {
-				if (adj != prev) {
-					dfsLCA(adj, curr);
+		public void bfsLCA(int start) {
+			LinkedList<Integer> q = new LinkedList<Integer>();
+			boolean[] visited = new boolean[N];
+			q.add(start);
+			visited[start] = true;
+			parent[start][0] = -1;
+			while (!q.isEmpty()) {
+				int curr = q.poll();
+				for (int adj : adjList[curr]) {
+					if (!visited[adj]) {
+						visited[adj] = true;
+						depth[adj] = depth[curr] + 1;
+						parent[adj][0] = curr;
+						q.add(adj);
+					}
 				}
 			}
 		}
