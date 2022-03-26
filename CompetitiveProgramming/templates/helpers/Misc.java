@@ -53,6 +53,16 @@ public class Misc {
 		return true;
 	}
 
+	static int gcd(int a, int b) {
+		int temp = 0;
+		while (b != 0) {
+			temp = b;
+			b = a % b;
+			a = temp;
+		}
+		return a;
+	}
+
 	// Binary and bits
 
 	static boolean[] toBool(int x, int numDigs) {
@@ -113,31 +123,31 @@ public class Misc {
 
 	static int lowerBound(int[] arr, int value) {
 		// First element which is >= value
-		int low = 0;
-		int high = arr.length - 1;
-		while (low < high) {
-			int mid = (low + high) / 2;
+		int l = 0;
+		int r = arr.length - 1;
+		while (l < r) {
+			int mid = (l / 2) + (r / 2) + ((l % 2 + r % 2) / 2);
 			if (value <= arr[mid]) {
-				high = mid;
+				r = mid;
 			} else {
-				low = mid + 1;
+				l = mid + 1;
 			}
 		}
-		return low;
+		return l;
 	}
 
 	static int upperBound(int[] arr, int value) {
 		// First element which is > val
-		int low = 0;
-		int high = arr.length - 1;
-		while (low < high) {
-			int mid = (low + high) / 2;
+		int l = 0;
+		int r = arr.length - 1;
+		while (l < r) {
+			int mid = (l / 2) + (r / 2) + ((l % 2 + r % 2) / 2);
 			if (value >= arr[mid]) {
-				low = mid + 1;
+				l = mid + 1;
 			} else {
-				high = mid;
+				r = mid;
 			}
 		}
-		return low;
+		return l;
 	}
 }
