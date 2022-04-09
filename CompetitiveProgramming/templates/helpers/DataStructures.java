@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class DataStructures {
 	static class BIT {
-		int BIT[];
+		int[] BIT;
 		int N;
 
 		public BIT(int N) {
@@ -73,74 +73,76 @@ public class DataStructures {
 		}
 	}
 
-	static class SegmentTree {
-		int[] tree;
-		int[] arr;
-		int N;
+	static class SegTree {
 
-		public SegmentTree(int[] arr, int N) {
-			this.arr = arr;
-			this.N = N;
-			int height = (int) (Math.ceil(Math.log(N) / Math.log(2))) + 1;
-			int length = (int) Math.pow(2, height);
-			tree = new int[length];
-			build(1, 0, N - 1);
+		private int size;
+		private int[] tree;
+		private int[] lazy;
+		private int[] sz;
+
+		SegTree(int size) {
+			this(size, new int[size]);
 		}
 
-		void merge(int node) {
-			tree[node] = tree[2 * node] + tree[2 * node + 1];
+		SegTree(int size, int[] val) {
+			this.size = size;
+			this.tree = new int[2 * size];
+			this.lazy = new int[2 * size];
+			this.sz = new int[2 * size];
+			for (int i = 0; i < size; i++) {
+				tree[size + i] = val[i];
+				sz[size + i] = 1;
+			}
+			build();
 		}
 
-		void build(int node, int start, int end) {
-			if (start == end) {
-				tree[node] = arr[start];
-			} else {
-				int mid = (start + end) / 2;
-				build(2 * node, start, mid);
-				build(2 * node + 1, mid + 1, end);
-				merge(node);
+		private void build() {
+			for (int i = 2 * size - 1; i > 1; i -= 2) {
+				tree[i >> 1] = tree[i] + tree[i ^ 1];
+				sz[i >> 1] = sz[i] + sz[i ^ 1];
 			}
 		}
 
-		void update(int ind, int val) {
-			updateUtil(1, 0, N - 1, ind, val);
-		}
-
-		void updateUtil(int node, int start, int end, int ind, int val) {
-			if (start == end) {
-				arr[ind] = val;
-				tree[node] = val;
-			} else {
-				int mid = (start + end) / 2;
-				if (start <= ind && ind <= mid) {
-					updateUtil(2 * node, start, mid, ind, val);
-				} else {
-					updateUtil(2 * node + 1, mid + 1, end, ind, val);
+		public void update(int lo, int hi, int val) {
+			for (int l = lo + size, r = hi + size; l <= r; l = (l + 1) >> 1, r = (r - 1) >> 1) {
+				if ((l & 1) > 0) {
+					tree[l] += val * sz[l];
+					lazy[l] += val;
 				}
-				merge(node);
+				if ((r & 1) == 0) {
+					tree[r] += val * sz[r];
+					lazy[r] += val;
+				}
+			}
+			pushUp(lo + size);
+			pushUp(hi + size);
+		}
+
+		public void pushUp(int i) {
+			for (; i > 1; i >>= 1) {
+				tree[i >> 1] = tree[i] + tree[i ^ 1] + lazy[i >> 1] * sz[i >> 1];
 			}
 		}
 
-		int query(int l, int r) {
-			if (r < l) {
-				int temp = l;
-				l = r;
-				r = temp;
+		public int query(int lo, int hi) {
+			int sum = 0;
+			for (lo += size, hi += size; lo <= hi; lo = (lo + 1) >> 1, hi = (hi - 1) >> 1) {
+				if ((lo & 1) > 0) {
+					sum += getValue(lo);
+				}
+				if ((hi & 1) == 0) {
+					sum += getValue(hi);
+				}
 			}
-			return queryUtil(1, 0, N - 1, l, r);
+			return sum;
 		}
 
-		int queryUtil(int node, int start, int end, int l, int r) {
-			if (r < start || end < l) {
-				return 0;
+		public int getValue(int i) {
+			int res = tree[i];
+			for (int j = i >> 1; j > 0; j >>= 1) {
+				res += lazy[j] * sz[i];
 			}
-			if (l <= start && end <= r) {
-				return tree[node];
-			}
-			int mid = (start + end) / 2;
-			int p1 = queryUtil(2 * node, start, mid, l, r);
-			int p2 = queryUtil(2 * node + 1, mid + 1, end, l, r);
-			return p1 + p2;
+			return res;
 		}
 	}
 }
