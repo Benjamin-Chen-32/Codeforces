@@ -118,7 +118,7 @@ public class DataStructures {
 			pushUp(hi + size);
 		}
 
-		public void pushUp(int i) {
+		private void pushUp(int i) {
 			for (; i > 1; i >>= 1) {
 				tree[i >> 1] = tree[i] + tree[i ^ 1] + lazy[i >> 1] * sz[i >> 1];
 			}
