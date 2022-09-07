@@ -10,6 +10,13 @@ public class DataStructures {
 			BIT = new int[N + 1];
 		}
 
+		public BIT(int[] vals) {
+			this(vals.length);
+			for (int i = 0; i < vals.length; i++) {
+				this.update(i, vals[i]);
+			}
+		}
+
 		public int get(int index) {
 			int sum = 0;
 			index++;

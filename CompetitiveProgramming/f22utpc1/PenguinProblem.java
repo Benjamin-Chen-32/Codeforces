@@ -17,10 +17,10 @@ public class PenguinProblem {
 		for (int i = 0; i < n; i++) {
 			strengths[i] = Integer.parseInt(tk.nextToken());
 		}
-		BIT tree = new BIT(n, strengths);
+		BIT tree = new BIT(strengths);
 
-		int[] starts = new int[n];
-		int[] ends = new int[n];
+		int[] starts = new int[t];
+		int[] ends = new int[t];
 		for (int i = 0; i < t; i++) {
 			tk = new StringTokenizer(in.readLine());
 			starts[i] = Integer.parseInt(tk.nextToken()) - 1;
@@ -52,9 +52,9 @@ public class PenguinProblem {
 			BIT = new int[N + 1];
 		}
 
-		public BIT(int N, int[] vals) {
-			this(N);
-			for (int i = 0; i < N; i++) {
+		public BIT(int[] vals) {
+			this(vals.length);
+			for (int i = 0; i < vals.length; i++) {
 				this.update(i, vals[i]);
 			}
 		}
