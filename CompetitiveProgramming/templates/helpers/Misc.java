@@ -63,6 +63,10 @@ public class Misc {
 		return a;
 	}
 
+	static int lcm(int a, int b) {
+		return (a * b) / gcd(a, b);
+	}
+
 	// Binary and bits
 
 	static boolean[] toBool(int x, int numDigs) {
