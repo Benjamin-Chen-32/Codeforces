@@ -123,33 +123,16 @@ public class Misc {
 		return (int) (Math.ceil((Math.log(x) / Math.log(2)))) == (int) (Math.floor(((Math.log(x) / Math.log(2)))));
 	}
 
-	// Binary search variants
-
-	static int lowerBound(int[] arr, int value) {
-		// First element which is >= value
+	static int bSearch(int[] arr, int value) {
+		// First element that satisfies condition or arr.length if doesn't exist
 		int l = 0;
-		int r = arr.length - 1;
+		int r = arr.length;
 		while (l < r) {
 			int mid = (l / 2) + (r / 2) + ((l % 2 + r % 2) / 2);
-			if (value <= arr[mid]) {
+			if (arr[mid] >= value) {
 				r = mid;
 			} else {
 				l = mid + 1;
-			}
-		}
-		return l;
-	}
-
-	static int upperBound(int[] arr, int value) {
-		// First element which is > val
-		int l = 0;
-		int r = arr.length - 1;
-		while (l < r) {
-			int mid = (l / 2) + (r / 2) + ((l % 2 + r % 2) / 2);
-			if (value >= arr[mid]) {
-				l = mid + 1;
-			} else {
-				r = mid;
 			}
 		}
 		return l;
