@@ -4,6 +4,8 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
+import javax.security.auth.kerberos.KerberosCredMessage;
+
 public class Maze {
 
 	static final int[] dirR = { 0, 0, 1, -1 };
@@ -17,7 +19,8 @@ public class Maze {
 		int k = Integer.parseInt(tk.nextToken());
 		boolean[][] wall = new boolean[n][m];
 		boolean[][] orig = new boolean[n][m];
-		LinkedList<Node> empty = new LinkedList<Node>();
+		int numEmpty = 0;
+		Node start = new Node(0, 0);
 		for (int i = 0; i < n; i++) {
 			char[] line = in.readLine().toCharArray();
 			for (int j = 0; j < m; j++) {
@@ -25,11 +28,13 @@ public class Maze {
 					wall[i][j] = true;
 					orig[i][j] = true;
 				} else {
-					empty.add(new Node(i, j));
+					start.i = i;
+					start.j = j;
+					numEmpty++;
 				}
 			}
 		}
-		search(wall, empty, n, m, k);
+		solve(wall, start, n, m, k, numEmpty);
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {
 				if (wall[i][j]) {
@@ -47,38 +52,21 @@ public class Maze {
 		in.close();
 	}
 
-	static boolean search(boolean[][] grid, LinkedList<Node> empty, int n, int m, int k) {
-		if (k == 0) {
-			return true;
-		}
-
-		LinkedList<Node> newEmpty = new LinkedList<Node>();
-		for (Node node : empty) {
-			newEmpty.add(node);
-		}
-
-		for (Node node : empty) {
-			newEmpty.remove(node);
-			grid[node.i][node.j] = true;
-			if (connected(grid, newEmpty, n, m)) {
-				boolean res = search(grid, newEmpty, n, m, k - 1);
-				if (res) {
-					return true;
-				}
-			}
-			newEmpty.add(node);
-			grid[node.i][node.j] = false;
-		}
-		return false;
-	}
-
-	static boolean connected(boolean[][] grid, LinkedList<Node> empty, int n, int m) {
+	static void solve(boolean[][] grid, Node start, int n, int m, int k, int numEmpty) {
 		boolean[][] visited = new boolean[n][m];
 		LinkedList<Node> q = new LinkedList<Node>();
-		q.add(empty.peek());
+		q.add(start);
+		int numVis = 0;
 		while (!q.isEmpty()) {
 			Node curr = q.poll();
+			if (visited[curr.i][curr.j]) {
+				continue;
+			}
 			visited[curr.i][curr.j] = true;
+			numVis++;
+			if (numEmpty - numVis == k) {
+				break;
+			}
 			for (int i = 0; i < 4; i++) {
 				int newR = curr.i + dirR[i];
 				int newC = curr.j + dirC[i];
@@ -87,15 +75,13 @@ public class Maze {
 				}
 			}
 		}
-		int numVis = 0;
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {
-				if (visited[i][j]) {
-					numVis++;
+				if (!visited[i][j] && !grid[i][j]) {
+					grid[i][j] = true;
 				}
 			}
 		}
-		return numVis == empty.size();
 	}
 
 	static boolean inBounds(int r, int c, int R, int C) {
