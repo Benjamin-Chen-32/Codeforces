@@ -175,6 +175,33 @@ public class Graphs {
 		return dists;
 	}
 
+	static boolean relax(LinkedList<Edge>[] adj, long[] dist, int N) {
+		boolean relaxed = false;
+		for (int i = 0; i < N; i++) {
+			for (Edge e : adj[i]) {
+				int j = e.other;
+				if (dist[i] != Long.MAX_VALUE && dist[i] + e.weight < dist[j]) {
+					dist[j] = dist[i] + e.weight;
+					relaxed = true;
+				}
+			}
+		}
+		return relaxed;
+	}
+
+	static long[] bellmanFord(LinkedList<Edge>[] adjList, int N) {
+		long[] dist = new long[N];
+		Arrays.fill(dist, Long.MAX_VALUE);
+		dist[0] = 0;
+		for (int i = 0; i < N - 1; i++)
+			if (!relax(adjList, dist, N))
+				break;
+		if (relax(adjList, dist, N)) {
+			dist = null;
+		}
+		return dist;
+	}
+
 	static class Node implements Comparable<Node> {
 		int num;
 		long dist;
