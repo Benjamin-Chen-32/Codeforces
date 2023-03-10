@@ -20,7 +20,7 @@ public class DataStructures {
 		}
 
 		// Sums from 0 to index inclusive
-		// Note: summing from i to j inclusive is
+		// Note: summing [i, j] is
 		// bit.get(j) - (i == 0 ? 0 : bit.get(i))
 		public int get(int index) { // O(logN)
 			int sum = 0;
@@ -117,7 +117,7 @@ public class DataStructures {
 			}
 		}
 
-		// Update range from lo to hi inclusive
+		// Update range [lo, hi]
 		public void update(int lo, int hi, int val) { // O(logN)
 			for (int l = lo + size, r = hi + size; l <= r; l = (l + 1) >> 1, r = (r - 1) >> 1) {
 				if ((l & 1) > 0) {
@@ -142,7 +142,7 @@ public class DataStructures {
 			}
 		}
 
-		// Query from lo to hi inclusive
+		// Query [lo, hi]
 		public int query(int lo, int hi) { // O(logN)
 			int sum = 0;
 			for (lo += size, hi += size; lo <= hi; lo = (lo + 1) >> 1, hi = (hi - 1) >> 1) {

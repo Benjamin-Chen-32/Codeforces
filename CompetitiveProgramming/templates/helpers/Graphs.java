@@ -18,7 +18,7 @@ public class Graphs {
 	}
 
 	// MST Algs
-	static int[] primAdjMat(int adjMat[][], int N) {
+	static int[] primAdjMat(int adjMat[][], int N) { // Slower O(V^2) implementation
 		// Array to store constructed MST
 		int parent[] = new int[N];
 
@@ -52,7 +52,7 @@ public class Graphs {
 		return parent;
 	}
 
-	static KEdge[] kruskalEdgeList(KEdge[] edges, int E) {
+	static KEdge[] kruskalEdgeList(KEdge[] edges, int E) { // O(ElogE)
 		PriorityQueue<KEdge> pq = new PriorityQueue<KEdge>();
 		for (int i = 0; i < E; i++) {
 			pq.add(edges[i]);
@@ -88,6 +88,10 @@ public class Graphs {
 	}
 
 	// Shortest Path Algs
+	// Dijkstra O((E + V)log(V))
+	// Bellman Ford O(EV) but usable for negative edge weights
+	// BF also detects negative cycles
+	
 	static long[] dijkstraAdjMat(int[][] adjMat, int root, int N) {
 		long[] dists = new long[N];
 		Arrays.fill(dists, Long.MAX_VALUE);
@@ -271,14 +275,14 @@ public class Graphs {
 		}
 	}
 
-	static class LCA {
+	static class LCA { // LCA for n-ary tree
 		int[] depth;
 		int[][] parent;
 		int level;
 		LinkedList<Integer>[] adjList;
 		int N;
 
-		public LCA(LinkedList<Integer>[] adjList, int N) {
+		public LCA(LinkedList<Integer>[] adjList, int N) { // O(NlogN)
 			this.adjList = adjList;
 			this.N = N;
 			level = (int) (Math.ceil(Math.log(N) / Math.log(2)));
@@ -316,7 +320,7 @@ public class Graphs {
 			}
 		}
 
-		public int lca(int u, int v) {
+		public int lca(int u, int v) { // O(logN)
 			if (depth[v] < depth[u]) {
 				int temp = u;
 				u = v;
