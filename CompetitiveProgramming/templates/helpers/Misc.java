@@ -67,6 +67,22 @@ public class Misc {
 		return (a * b) / gcd(a, b);
 	}
 
+	static long fastExp(long base, long exp) { // Assumes 0^0 is 1
+		long MOD = 1000000007;
+		if (exp == 0) return 1;
+		long ans = fastExp(base, exp / 2);
+		ans = (ans * ans) % MOD;
+		if (exp % 2 == 1) {
+			ans = (base * ans) % MOD;
+		}
+		return ans;
+	}
+
+	static long inverse(long a) {
+		long MOD = 1000000007; // Only works for prime MOD
+		return fastExp(a, MOD - 2);
+	}
+
 	// Binary and bits
 
 	static boolean[] toBool(int x, int numDigs) {

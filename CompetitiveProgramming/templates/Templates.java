@@ -10,7 +10,6 @@ public class Templates {
 		StringTokenizer tk = new StringTokenizer(in.readLine());
 		int n = Integer.parseInt(tk.nextToken());
 		
-		System.out.println(n);
 		in.close();
 	}
 }
