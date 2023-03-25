@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class CalibrationComplications {
@@ -14,8 +13,6 @@ public class CalibrationComplications {
 		int n = Integer.parseInt(tk.nextToken());
 		long[] a = new long[n];
 		long[] b = new long[n];
-		long[] both = new long[2 * n];
-
 
 		long maxA = 0;
 		tk = new StringTokenizer(in.readLine());
