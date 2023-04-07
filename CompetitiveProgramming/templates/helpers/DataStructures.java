@@ -42,24 +42,24 @@ public class DataStructures {
 	}
 
 	static class DisjointSet { // Yosupo verified
-		int[] arr;
+		int[] parent;
 		int[] size;
 		int N;
 
 		public DisjointSet(int N) { // O(N)
 			this.N = N;
-			arr = new int[N];
+			parent = new int[N];
 			size = new int[N];
 			Arrays.fill(size, 1);
 			for (int i = 0; i < N; i++) {
-				arr[i] = i;
+				parent[i] = i;
 			}
 		}
 
 		public int root(int curr) {
-			while (arr[curr] != curr) {
-				arr[curr] = arr[arr[curr]];
-				curr = arr[curr];
+			while (parent[curr] != curr) {
+				parent[curr] = parent[parent[curr]];
+				curr = parent[curr];
 			}
 			return curr;
 		}
@@ -74,12 +74,15 @@ public class DataStructures {
 		public void union(int a, int b) { // O(logN)
 			int aRoot = root(a);
 			int bRoot = root(b);
+			if (aRoot == bRoot) {
+				return;
+			}
 			if (size[aRoot] < size[bRoot]) {
 				// Subset B is bigger than subset A, so B should be A's parent
-				arr[aRoot] = arr[bRoot];
+				parent[aRoot] = parent[bRoot];
 				size[bRoot] += size[aRoot];
 			} else {
-				arr[bRoot] = arr[aRoot];
+				parent[bRoot] = parent[aRoot];
 				size[aRoot] += size[bRoot];
 			}
 		}
