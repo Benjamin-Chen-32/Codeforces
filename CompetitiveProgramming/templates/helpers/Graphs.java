@@ -276,6 +276,8 @@ public class Graphs {
 	}
 
 	static class LCA { // LCA for n-ary tree
+		// Can be used for calculating all pairs shortest path in tree
+		// Shortest path between a, b is dist(a) + dist(b) - 2 * dist(lca(a, b))
 		int[] depth;
 		int[][] parent;
 		int level;
